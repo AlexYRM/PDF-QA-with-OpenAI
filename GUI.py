@@ -10,11 +10,6 @@ file_storage = []
 skippable = True
 updated = False
 
-# greetings and brief instructions
-ui.label("Upload File")
-ui.label("Use the "+" button to select a PDF file")
-ui.label("If you want to upload another file, please delete the question so the file list may update")
-
 
 # function to append any new file to file_info.csv(contains names and added date of all the files in memory)
 # and duplicate the names in file_info.csv to file_storage
@@ -91,17 +86,29 @@ def AI_answer():
     log.push(response)
 
 
-with ui.row():
-    ui.upload(on_upload=handle_upload, auto_upload=True)
-    with ui.row():
-        text_input = ui.input(label='Ask your question', placeholder='Write here', on_change=update_question)
+# greetings and brief instructions
+with ui.column().classes("items-center w-full mb-5 my-2"):
+    ui.label("Upload File").classes("text-lg font-medium tracking-wide text-fuchsia-700")
+    ui.label("Use the '+' button to select a PDF file").classes("text-lg font-medium tracking-wide text-purple-600")
+    ui.label("If you want to upload another file, please delete the question so the file list may update")\
+        .classes("text-lg font-medium tracking-wide text-purple-600")
+
+
+with ui.row().classes('w-full justify-around'):
+    ui.upload(on_upload=handle_upload, auto_upload=True).classes("h-40")
+    with ui.row().classes("justify-around"):
+        text_input = ui.input(label='Ask your question', placeholder='Write here', on_change=update_question).\
+            classes("text-lg w-80")
         with ui.column():
-            ui.label("Select document source").bind_visibility_from(text_input, "value")
+            ui.label("Select source document").bind_visibility_from(text_input, "value").\
+                classes("text-purple-600 text-lg underline decoration-dotted "
+                        "decoration-purple-600 underline-offset-2 mb-14")
             select_source = ui.select(options=source_files(), with_input=True, on_change=update_selection).\
-                bind_visibility_from(text_input, "value")
+                bind_visibility_from(text_input, "value").classes("w-80 text-base")
 
-    log = ui.log(max_lines=10).classes('w-full h-20')
-    button = ui.button('Find the AI\'s answer', on_click=AI_answer).\
-        bind_visibility_from(text_input, "value")
+    log = ui.log(max_lines=10).classes('w-10/12 mt-20 h-40 text-sm text-center leading-tight'
+                                       ' container mx-auto p-4 whitespace-pre-wrap')
+    button = ui.button('Find the AI\'s answer', on_click=AI_answer).bind_visibility_from(text_input, "value").\
+        classes("w-1/6 mt-2")
 
-ui.run(title="Submit File")
+ui.run(title="Submit File", dark=True)
