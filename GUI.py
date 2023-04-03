@@ -103,3 +103,5 @@ with ui.row():
     log = ui.log(max_lines=10).classes('w-full h-20')
     button = ui.button('Find the AI\'s answer', on_click=AI_answer).\
         bind_visibility_from(text_input, "value")
+
+ui.run(title="Submit File")
