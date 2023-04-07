@@ -1,6 +1,7 @@
 import AI
 import csv
 import time
+import os.path
 import datetime
 from nicegui import ui, events
 
@@ -46,7 +47,8 @@ def handle_upload(event: events.UploadEventArguments):
         # if file is not found in file_info.csv write it to memory
         if skippable:
             with event.content as f:
-                with open(f"Uploaded Files\{event.name}", "wb") as file:
+                path = os.path.join("Uploaded_Files", event.name)
+                with open(path, "wb") as file:
                     for line in f.readlines():
                         file.write(line)
 
@@ -81,8 +83,7 @@ def AI_answer():
         response = "You did not select the source from the dropdown column \n" + "-"*60
     else:
         response = f"Q: {question}  \n" \
-                   f"A: {AI.answer_questions(question, select)}" + "-"*60
-
+                   f"A: {AI.answer_questions(question, select)}\n" + "-"*60
     log.push(response)
 
 
@@ -111,4 +112,4 @@ with ui.row().classes('w-full justify-around'):
     button = ui.button('Find the AI\'s answer', on_click=AI_answer).bind_visibility_from(text_input, "value").\
         classes("w-1/6 mt-2")
 
-ui.run(title="Submit File", dark=True)
+ui.run(title="Submit File", dark=True, host="0.0.0.0", port=60)

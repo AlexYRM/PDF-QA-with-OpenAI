@@ -16,8 +16,8 @@ async def create_upload_file(file: UploadFile = File(description="Load a PDF fil
     # make sure to receive PDF file, give error in case we don't
     if not file.content_type == "application/pdf":
         raise HTTPException(status_code=404, detail="Invalid Document. Upload a PDF file")
-    # create a copy of the temp file to "Uploaded Files"
-    with open(f"Uploaded Files\{file.filename}", "wb") as stored_file:
+    # create a copy of the temp file to "Uploaded_Files"
+    with open(f"Uploaded_Files\{file.filename}", "wb") as stored_file:
         shutil.copyfileobj(file.file, stored_file)
         stored_file_path = str(pathlib.Path().absolute()) + f"\\Uploaded Files\\{file.filename}"
     # create a log file to detect if the uploaded file is already stored
