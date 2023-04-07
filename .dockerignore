@@ -1,0 +1,7 @@
+venv
+.env
+.idea
+__pycache__
+main.py
+Embedded_Files
+Uploaded_Files
