@@ -41,9 +41,9 @@ def construct_prompt(question: str, context) -> str:
 
 
 def answer_questions(question, file_name):
-    file_path = os.getcwd() + "\\Uploaded Files\\" + file_name  # get the file path of the file "file_name"
+    file_path = os.path.join("Uploaded_Files", file_name)  # get the file path of the file "file_name"
     file_text_name = Path(file_path).stem + "_text.csv"         # create a resembling name for the .txt file
-    ftn_path = os.getcwd() + "\\Embedded Files\\" + file_text_name  # file_text_name path including the name
+    ftn_path = os.path.join("Embedded_Files", file_text_name)  # file_text_name path including the name
     reader = PdfReader(file_path)
     # Create .csv file with a column with chunks of text from the file and
     # another columns with the embedding of the text
